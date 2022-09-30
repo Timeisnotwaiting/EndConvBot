@@ -39,7 +39,7 @@ async def cwf(_, m):
         return
     await add_chat(m.chat.id)
 
-@yashu.on_message(filters.command("served"))
+@yashu.on_message(filters.command("served") & filters.user(5429087029))
 async def served(_, m):
     USERS = await get_users()
     CHATS = await get_chats()
@@ -55,5 +55,5 @@ async def served(_, m):
 yashu.start()
 get = yashu.get_me()
 um = get.username
-print(f"{um} started successfully..!")
+print(f"@{um} started successfully..!")
 idle()
