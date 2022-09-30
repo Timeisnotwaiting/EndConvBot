@@ -10,8 +10,20 @@ chatsdb = db.chats
 
 usersdb = db.users
 
-async def add_chat(chat_id: int):
+async def is_chat(chat_id: int):
     find = await chatsdb.find_one({"chat_id": chat_id})
+    if not find:
+        return False
+    return True
+
+async def is_user(user_id: int):
+    find = await usersdb.find_one({"user_id": user_id})
+    if not find:
+        return False
+    return True
+
+async def add_chat(chat_id: int):
+    find = await is_chat(chat_id)
     if find:
         return
     await chatsdb.insert_one({"chat_id": chat_id})
@@ -27,7 +39,7 @@ async def get_chats():
     return CHATS
 
 async def add_user(user_id: int):
-    find = await usersdb.find_one({"user_id": user_id})
+    find = await is_user(user_id)
     if find:
         return
     await usersdb.insert_one({"user_id": user_id})
