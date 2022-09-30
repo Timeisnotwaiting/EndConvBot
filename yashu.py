@@ -56,10 +56,10 @@ async def served(_, m):
     CHATS = await get_chats()
     u_msg = ""
     for x in USERS:
-        u_msg += f"{x}\n"
+        u_msg += f"<code>{x}\n</code>"
     c_msg = ""
     for y in CHATS:
-        c_msg += f"{y}\n"
+        c_msg += f"<code>{y}\n</code>"
     await m.reply(f"Chats :-\n\n{c_msg}\nCount :- {len(CHATS)}\n\nUsers :-\n\n{u_msg}\nCount :- {len(USERS)}")
 
 
