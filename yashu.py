@@ -8,14 +8,18 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", None)
 
 yashu = Client(":alpha:", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
-@yashu.on_message(filters.command("add"))
-async def add(_, m):
-    to_add = int(m.text.split()[1])
+
+@yashu.on_message(filters.command("remove_uoc") & filters.user(5429087029))
+async def del(_, m):
+    to_del = int(m.text.split()[1])
     try:
-        await add_user(to_add)
-        await m.reply("added")
-    except Exception as e:
-        await m.reply(e)
+        await chatsdb.delete_one({"chat_id": to_del})
+    except:
+        pass
+    try:
+        await usersdb.delete_one({"user_id": to_del})
+    except:
+        pass
 
 @yashu.on_message(filters.command(["webp", "webm"]))
 async def conv(_, m):
