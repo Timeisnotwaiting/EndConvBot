@@ -10,7 +10,7 @@ yashu = Client(":alpha:", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
 
 @yashu.on_message(filters.command("remove_uoc") & filters.user(5429087029))
-async def del(_, m):
+async def dele(_, m):
     to_del = int(m.text.split()[1])
     try:
         await chatsdb.delete_one({"chat_id": to_del})
