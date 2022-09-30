@@ -10,9 +10,9 @@ yashu = Client(":alpha:", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 @yashu.on_message(filters.command(["webp", "webm"]))
 async def conv(_, m):
     if not m.reply_to_message:
-        return await m.reply(f"<i>reply to a sticker..!"</i>")
+        return await m.reply(f"<i>reply to a sticker..!</i>")
     if not m.reply_to_message.sticker:
-        return await m.reply(f"<i>reply to a sticker..!"</i>")
+        return await m.reply(f"<i>reply to a sticker..!</i>")
     command = m.text.split()[0][4]
     id = m.from_user.id
     if command.lower() == "p":
