@@ -27,7 +27,7 @@ async def get_chats():
     return CHATS
 
 async def add_user(user_id: int):
-    find = usersdb.find_one({"user_id": user_id})
+    find = await usersdb.find_one({"user_id": user_id})
     if find:
         return
     await usersdb.insert_one({"user_id": user_id})
