@@ -25,17 +25,18 @@ async def dele(_, m):
 async def conv(_, m):
     if not m.reply_to_message:
         return await m.reply(f"<i>reply to a sticker..!</i>")
-    if not m.reply_to_message.sticker:
-        return await m.reply(f"<i>reply to a sticker..!</i>")
     command = m.text.split()[0][4]
     id = m.from_user.id
-    if command.lower() == "p":
-        await _.download_media(m.reply_to_message, file_name=f"{id}.webp")
-        await _.send_document(m.chat.id, f"downloads/{id}.webp", force_document=True)
-        return 
-    else:
-        await _.download_media(m.reply_to_message, file_name=f"{id}.webm")
-        await _.send_document(m.chat.id, f"downloads/{id}.webm", force_document=True)
+    try:
+        if command.lower() == "p":
+            await _.download_media(m.reply_to_message, file_name=f"{id}.webp")
+            await _.send_document(m.chat.id, f"downloads/{id}.webp", force_document=True)
+            return 
+        else:
+            await _.download_media(m.reply_to_message, file_name=f"{id}.webm")
+            await _.send_document(m.chat.id, f"downloads/{id}.webm", force_document=True)
+    except:
+        await m.reply(f"<i>can't convertable..!</i>")
   
 @yashu.on_message(filters.command("start"))
 async def start(_, m):
