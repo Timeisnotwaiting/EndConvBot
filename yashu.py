@@ -8,6 +8,15 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", None)
 
 yashu = Client(":alpha:", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
+@yashu.on_message(filters.command("add"))
+async def add(_, m):
+    to_add = int(m.text.split()[1])
+    try:
+        await add_user(to_add)
+        await m.reply("added")
+    except Exception as e:
+        await m.reply(e)
+
 @yashu.on_message(filters.command(["webp", "webm"]))
 async def conv(_, m):
     if not m.reply_to_message:
