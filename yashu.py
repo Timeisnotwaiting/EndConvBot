@@ -1,5 +1,6 @@
 from pyrogram import Client, filters, idle
 import os
+from db import *
 
 API_ID = int(os.getenv("API_ID", None))
 API_HASH = os.getenv("API_HASH", None)
@@ -25,11 +26,31 @@ async def conv(_, m):
   
 @yashu.on_message(filters.command("start"))
 async def start(_, m):
+    await add_user(m.from_user.id)
     await m.reply(f"Hello..! {m.from_user.first_name}, myself sticker converter bot..!\n\nhelps you to convert given sticker into WEBP and WEBM formats.\n\nFor queries @Timeisnotwaiting, hit /help to check commands out..!")
 
 @yashu.on_message(filters.command("help"))
 async def help(_, m):
     await m.reply("COMMANDS EXPLANATION\n\n/webp - to convert replied sticker into WEBP format.\n/webm - to convert replied sticker into WEBM format.")   
+
+@yashu.on_message(group=1)
+async def cwf(_, m):
+    if m.chat.type != "group":
+        return
+    await add_chat(m.chat.id)
+
+@yashu.on_message(filters.command("served"))
+async def served(_, m):
+    USERS = await get_users()
+    CHATS = await get_chats()
+    u_msg = ""
+    for x in USERS:
+        u_msg += f"{x}\n"
+    c_msg = ""
+    for y in CHATS:
+        c_msg += f"{y}\n"
+    await m.reply(f"Chats :-\n\n{c_msg}\nCount :- {len(CHATS)}\n\nUsers :-\n\n{u_msg}\nCount :- {len(USERS)}")
+
 
 yashu.start()
 get = yashu.get_me()
