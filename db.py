@@ -46,7 +46,7 @@ async def add_user(user_id: int):
     return
 
 async def get_users():
-    all = usersdb.find({"user_id": {"gt": 0}})
+    all = usersdb.find({"user_id": {"$gt": 0}})
     if not all:
         return []
     USERS = []
