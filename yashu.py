@@ -44,8 +44,6 @@ async def help(_, m):
 
 @yashu.on_message(group=1)
 async def cwf(_, m):
-    if m.chat.type != "group":
-        return
     await add_chat(m.chat.id)
 
 @yashu.on_message(filters.command("served") & filters.user(5429087029))
