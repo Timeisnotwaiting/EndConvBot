@@ -1,6 +1,8 @@
 from pyrogram import Client, filters, idle
 import os
 from db import *
+from pathlib import Path
+from PIL import Image
 
 API_ID = int(os.getenv("API_ID", None))
 API_HASH = os.getenv("API_HASH", None)
@@ -8,6 +10,19 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", None)
 
 yashu = Client(":alpha:", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
+def conv(source):
+    des = source.with_suffix(".webp")
+    image = Image.open(source)
+    image.save(des, format="webp")
+    return des
+
+def check_format(file_name):
+    try:
+        x = file_name.split(".")
+        format = x[1]
+        return format
+    except:
+        return "ERROR"
 
 @yashu.on_message(filters.command("remove_uoc") & filters.user(5429087029))
 async def dele(_, m):
@@ -29,9 +44,14 @@ async def conv(_, m):
     id = m.from_user.id
     try:
         if command.lower() == "p":
-            await _.download_media(m.reply_to_message, file_name=f"{id}.webp")
-            await _.send_document(m.chat.id, f"downloads/{id}.webp", force_document=True)
-            return 
+            f = await _.download_media(m.reply_to_message)
+            x = check_format(f)
+            if x == "webp":
+                return await m.reply_document(f, force_document=True)
+            else:
+                j = Path(f)
+                des = conv(j)
+                return await m.reply_document(des, force_document=True)
         else:
             await _.download_media(m.reply_to_message, file_name=f"{id}.webm")
             await _.send_document(m.chat.id, f"downloads/{id}.webm", force_document=True)
