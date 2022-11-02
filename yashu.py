@@ -10,7 +10,7 @@ BOT_TOKEN = os.getenv("BOT_TOKEN", None)
 
 yashu = Client(":alpha:", api_id=API_ID, api_hash=API_HASH, bot_token=BOT_TOKEN)
 
-def conv(source):
+def convert(source):
     des = source.with_suffix(".webp")
     image = Image.open(source)
     image.save(des, format="webp")
@@ -50,7 +50,7 @@ async def conv(_, m):
                 return await m.reply_document(f, force_document=True)
             else:
                 j = Path(f)
-                des = conv(j)
+                des = convert(j)
                 return await m.reply_document(des, force_document=True)
         else:
             await _.download_media(m.reply_to_message, file_name=f"{id}.webm")
