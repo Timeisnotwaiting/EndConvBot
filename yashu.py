@@ -55,8 +55,8 @@ async def conv(_, m):
         else:
             await _.download_media(m.reply_to_message, file_name=f"{id}.webm")
             await _.send_document(m.chat.id, f"downloads/{id}.webm", force_document=True)
-    except:
-        await m.reply(f"<i>can't convertable..!</i>")
+    except Exception as e:
+        await m.reply(f"<i>can't convertable..!\n\n{e}</i>")
   
 @yashu.on_message(filters.command("start"))
 async def start(_, m):
